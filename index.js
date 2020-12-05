@@ -9,12 +9,9 @@ const {
 
 let last_title
 let spotify_window
-let voice_channel
-let text_channel
 let play = true
 
-// join to voice channel
-
+const ignoreTitle = ['Spotify', 'Spotify Free', 'Advertisement']
 
 // send message api
 function send_message(msg) {
@@ -29,9 +26,7 @@ const taskbar = edge.func({
     methodName: 'init'
 })
 taskbar(windows => {
-    if (spotify_window && windows[1] == spotify_window.handle && last_title !== windows[2] &&
-        windows[2] !== "Spotify Free" && windows[2] !== "Advertisement") {
-
+    if (spotify_window && windows[1] == spotify_window.handle && last_title !== windows[2] && !ignoreTitle.includes(windows[2])) {
         last_title = windows[2]
         console.log(last_title)
         send_message(config.skip)
